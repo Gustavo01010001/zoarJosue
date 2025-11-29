@@ -3,179 +3,115 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zoação: Josué</title>
+  <title>Zoação do Josué</title>
+
+  <!-- html2canvas (para exportar como PNG de forma compatível online) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+          integrity="sha512-BNa5lEhIOtVt7L7Zg5X3lQjfdzE40HkNVmqcqiYmF1Q2D2s9G1+MVypyGkB3dIZV5f6H9jOiiA2BxRkB4Cw4bw=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"></script>
 
   <style>
     :root{
       --bg:#0f1724;
-      --card:#0b1220;
       --accent:#ffcc00;
       --muted:#9aa4b2;
     }
-    *{ box-sizing:border-box; }
 
     body{
       margin:0;
-      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
-      background:radial-gradient(ellipse at 10% 10%, #101827 0%, #071020 40%);
-      color:#fff;
+      background:radial-gradient(circle at top, #142233, #0b1320);
+      font-family:Inter,Arial;
+      height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      min-height:100vh;
-      overflow-x:hidden;
+      color:white;
     }
 
     .wrap{
-      width:960px;
-      max-width:95%;
+      width:900px;
+      max-width:94%;
       background:rgba(255,255,255,0.03);
       border-radius:16px;
-      padding:22px;
-      box-shadow:0 10px 40px rgba(2,6,23,0.7);
+      padding:20px;
       display:grid;
-      grid-template-columns:420px 1fr;
+      grid-template-columns:380px 1fr;
       gap:20px;
-      border:1px solid rgba(255,255,255,0.05);
-      transition:0.25s;
+      border:1px solid rgba(255,255,255,0.07);
     }
 
-    /* Foto */
     .photo-card{
       position:relative;
-      padding:14px;
+      padding:10px;
+      background:rgba(255,255,255,0.05);
       border-radius:12px;
       overflow:hidden;
-      background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
     }
+
     .photo-card img{
       width:100%;
       height:360px;
       object-fit:cover;
       border-radius:12px;
-      border:2px solid rgba(255,255,255,0.2);
     }
 
-    .glow{
-      position:absolute;
-      inset:-40%;
-      opacity:0.07;
-      filter:blur(45px);
-      background:conic-gradient(from 90deg, #ffcc00, #ff6b6b, #8e6bff, #00d4ff);
-    }
-
-    /* Conteúdo */
     h1{
-      margin:0;
       font-size:34px;
-      color:var(--accent);
-      text-shadow:0 8px 24px rgba(0,0,0,0.6);
-      animation:pulse 1.7s infinite ease-in-out;
-    }
-    @keyframes pulse{
-      0%{ transform:scale(1); }
-      50%{ transform:scale(1.04); }
-      100%{ transform:scale(1); }
+      margin:0;
+      color:#ffcc00;
+      text-shadow:0 8px 20px #000;
     }
 
-    .nick{ font-size:20px; margin-top:6px; opacity:0.95; }
-    .sub{ margin-top:10px; color:var(--muted); font-size:14px; }
-
-    .kks{
-      margin-top:20px;
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-    .kk{
-      background:rgba(255,255,255,0.05);
-      border-radius:20px;
-      padding:8px 12px;
-      font-weight:bold;
-      font-size:18px;
-      animation:jump 1.2s infinite;
-    }
-    .kk:nth-child(2){ animation-delay:.1s }
-    .kk:nth-child(3){ animation-delay:.2s }
-    .kk:nth-child(4){ animation-delay:.3s }
-
-    @keyframes jump{
-      0%{ transform:translateY(0); }
-      50%{ transform:translateY(-10px) scale(1.05); }
-      100%{ transform:translateY(0); }
-    }
-
-    .controls{ margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
     .btn{
       padding:10px 14px;
       background:var(--accent);
       border:none;
       color:#111;
+      cursor:pointer;
       border-radius:10px;
       font-weight:bold;
-      cursor:pointer;
-      transition:.2s;
+      margin-top:10px;
     }
-    .btn:hover{ filter:brightness(1.15); }
 
     .btn.ghost{
       background:transparent;
-      border:1px solid rgba(255,255,255,0.08);
       color:var(--muted);
+      border:1px solid rgba(255,255,255,0.2);
     }
 
-    /* shake (modo caos) */
-    .shake{
-      animation:shake .15s infinite;
-    }
-    @keyframes shake{
-      0%{ transform:translate(0); }
-      25%{ transform:translate(-4px,2px); }
-      50%{ transform:translate(3px,-3px); }
-      75%{ transform:translate(-3px,-1px); }
-      100%{ transform:translate(0); }
+    .controls{
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    @media(max-width:860px){
+    @media(max-width:840px){
       .wrap{ grid-template-columns:1fr; }
-      .photo-card img{ height:300px; }
     }
-
   </style>
 </head>
 <body>
 
-<div class="wrap" id="app">
-  
+<div class="wrap" id="card">
+
   <div class="photo-card">
-    <div class="glow"></div>
-    <img id="mainPhoto" src="a.png" alt="Foto do amigo">
+    <img id="mainPhoto" src="photo.jpg" alt="foto">
     <input type="file" id="fileInput" accept="image/*" hidden>
 
-    <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
-      <button class="btn" onclick="fileInput.click()">Trocar foto</button>
-      <button class="btn ghost" onclick="randomSticker()">Adicionar sticker</button>
-    </div>
+    <button class="btn" onclick="fileInput.click()">Trocar foto</button>
   </div>
 
-  <div class="content">
+  <div>
     <h1 id="titleText">caguei nas calças KKKKK</h1>
-    <div class="nick">discord: <strong id="nickLine">caguei nas calças</strong></div>
-    <div class="sub">Zoação nível extremo — use com responsabilidade 😏</div>
-
-    <div class="kks" id="kkbox">
-      <div class="kk">K K K</div>
-      <div class="kk">K K K</div>
-      <div class="kk">K K K</div>
-      <div class="kk">K K K</div>
-    </div>
+    <p>discord: <b id="nickLine">caguei nas calças</b></p>
+    <p style="color:var(--muted)">Zoando o Josué no mais alto nível 😏</p>
 
     <div class="controls">
-      <button class="btn" onclick="toggleDrama()">Dramatizar</button>
-      <button class="btn ghost" onclick="toggleChaos()">Ativar CAOS</button>
-      <button class="btn ghost" onclick="randomPhrase()">Nova zoeira</button>
+      <button class="btn" onclick="savePNG()">Baixar imagem</button>
+      <button class="btn ghost" onclick="dramatic()">Dramatizar</button>
     </div>
-
   </div>
 
 </div>
@@ -184,8 +120,6 @@
 const fileInput = document.getElementById("fileInput");
 const mainPhoto = document.getElementById("mainPhoto");
 const titleText = document.getElementById("titleText");
-const nickLine = document.getElementById("nickLine");
-const wrap = document.getElementById("app");
 
 fileInput.onchange = e => {
   let f = e.target.files[0];
@@ -193,50 +127,28 @@ fileInput.onchange = e => {
   mainPhoto.src = URL.createObjectURL(f);
 };
 
-// modo dramático
-let dramatic = false;
-function toggleDrama(){
-  dramatic = !dramatic;
-  if(dramatic){
-    titleText.style.fontSize = "64px";
+// Dramatic mode
+let dramaticMode = false;
+function dramatic(){
+  dramaticMode = !dramaticMode;
+  if(dramaticMode){
     titleText.style.color = "#ff6b6b";
-  }else{
+    titleText.style.fontSize = "58px";
+  } else {
     titleText.style = "";
   }
 }
 
-// stickers aleatórios
-function randomSticker(){
-  const emojis = ["💩", "😂", "🤡", "🔥", "💥", "🍺", "🥴", "👽", "🐒"];
-  const s = document.createElement("div");
-  s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  s.style.position = "absolute";
-  s.style.left = Math.random()*70 + "%";
-  s.style.top = Math.random()*70 + "%";
-  s.style.fontSize = (30 + Math.random()*70) + "px";
-  s.style.pointerEvents = "none";
-  s.style.opacity = 0.9;
-  document.querySelector(".photo-card").appendChild(s);
-  setTimeout(()=> s.remove(), 4000);
-}
+// Exporta o card como PNG (compatível com GitHub Pages)
+function savePNG(){
+  const card = document.getElementById("card");
 
-// modo caos
-let chaos = false;
-function toggleChaos(){
-  chaos = !chaos;
-  wrap.classList.toggle("shake");
-}
-
-// frases de zoeira
-function randomPhrase(){
-  const frases = [
-    "Josué tentando ser sério e falhando miseravelmente 😂",
-    "Novo patch note: Josué buffado em vergonha 💀",
-    "Quando o Josué entra no Discord o FPS cai 😭",
-    "Dizem que o Josué inventou a vergonha alheia 🤡",
-    "Se existir competição de fiasco, Josué é campeão 🏆",
-  ];
-  titleText.textContent = frases[Math.floor(Math.random()*frases.length)];
+  html2canvas(card, { useCORS: true }).then(canvas => {
+    let link = document.createElement("a");
+    link.download = "zoeira-josue.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
 }
 </script>
 
